@@ -1,8 +1,12 @@
 package com.inducesmile.androidfoodordering;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -13,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,6 +33,7 @@ import com.inducesmile.notification.NotificationActivity;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 12321;
 
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
@@ -42,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        mCount = ((CustomApplication)getApplication()).cartItemCount();
+        mCount = ((CustomApplication) getApplication()).cartItemCount();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -54,6 +60,21 @@ public class MainActivity extends AppCompatActivity {
         fragment = new HomeFragment();
         fragmentTransaction.replace(R.id.content_main, fragment);
         fragmentTransaction.commit();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (this.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("This app needs location access");
+                builder.setMessage("Please grant location access so this app can detect beacons.");
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    public void onDismiss(DialogInterface dialog) {
+                        requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+                    }
+                });
+                builder.show();
+            }
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -72,16 +93,14 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_hot_deals) {
                     Intent hotDealIntent = new Intent(MainActivity.this, HotDealActvity.class);
                     startActivity(hotDealIntent);
-                }
-                else if (id == R.id.nav_notification) {
+                } else if (id == R.id.nav_notification) {
                     Intent notificationIntent = new Intent(MainActivity.this, NotificationActivity.class);
                     startActivity(notificationIntent);
-                }
-                else if (id == R.id.nav_profile) {
+                } else if (id == R.id.nav_profile) {
                     fragment = new ProfileFragment();
-                }else if (id == R.id.nav_logout) {
+                } else if (id == R.id.nav_logout) {
                     //remove user data from shared preference
-                    SharedPreferences mShared = ((CustomApplication)getApplication()).getShared().getInstanceOfSharedPreference();
+                    SharedPreferences mShared = ((CustomApplication) getApplication()).getShared().getInstanceOfSharedPreference();
                     mShared.edit().clear().apply();
 
                     //Navigate to login page
@@ -137,8 +156,27 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        mCount = ((CustomApplication)getApplication()).cartItemCount();
+        mCount = ((CustomApplication) getApplication()).cartItemCount();
         super.onResume();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_COARSE_LOCATION: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "coarse location permission granted");
+                    ((CustomApplication)getApplication()).initBeacon();
+                } else {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Functionality limited");
+                    builder.setMessage("Since location access has not been granted, this app will not be able to discover beacons when in the background.");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.show();
+                }
+            }
+        }
     }
 
 }
