@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/one" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/home" />
+    </group>
+
+    <group android:id="@+id/two" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_menu_category"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_categories" />
+    </group>
+
+    <group android:id="@+id/four" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_order_history"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/order_history" />
+    </group>
+
+    <group android:id="@+id/five" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_favorites"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/favorite_menu" />
+    </group>
+
+    <group android:id="@+id/six" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_hot_deals"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/hot_deals" />
+    </group>
+
+    <group android:id="@+id/ten" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/push_notification" />
+    </group>
+
+    <group android:id="@+id/seven" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/profile" />
+    </group>
+
+    <group android:id="@+id/eight" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/logout" />
+    </group>
+
+
+</menu>
