@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class CustomApplication extends Application implements BootstrapNotifier
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
         builder = new GsonBuilder();
         gson = builder.create();
         shared = new CustomSharedPreference(getApplicationContext());

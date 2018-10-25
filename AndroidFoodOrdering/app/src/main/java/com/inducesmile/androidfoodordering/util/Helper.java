@@ -11,7 +11,7 @@ import java.util.Locale;
 
 public class Helper {
 
-    public static final String PUBLIC_FOLDER = "http://10.0.2.2:8080/public/";
+    public static final String PUBLIC_FOLDER = "http://10.0.2.2:8080/public/"; //for emulator and android devices 10.0.2.2:8080/ is the localhost
     public static final String PATH_TO_SERVER_LOGIN = PUBLIC_FOLDER + "signin";
     public static final String PATH_TO_SERVER_REGISTRATION = PUBLIC_FOLDER + "register";
     public static final String PATH_TO_RESTAURANT_HOME = PUBLIC_FOLDER + "mobilerestuarant";
