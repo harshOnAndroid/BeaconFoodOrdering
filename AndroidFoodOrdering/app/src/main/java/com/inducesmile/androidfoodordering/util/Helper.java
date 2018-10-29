@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Helper {
+    public static final String ESTIMOTE_APP_ID = "food-ordering-app-2xq";
+    public static final String ESTIMOTE_APP_TOKEN = "d21784b848e37b3b05403ad9c21b0686";
 
     public static final String PUBLIC_FOLDER = "http://10.0.2.2:8080/public/";
     public static final String PATH_TO_SERVER_LOGIN = PUBLIC_FOLDER + "signin";
