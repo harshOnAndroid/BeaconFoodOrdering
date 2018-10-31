@@ -47,10 +47,13 @@ public class IntroActivity extends AppCompatActivity {
             }
         });
 
+        //turning bluetooth on
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter != null && !mBluetoothAdapter.isEnabled()) {
             mBluetoothAdapter.enable();
         }
+
+        //asking for user permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (this.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 showPermissionDialog("This app needs location access", "Please grant location access so this app can detect beacons.");
@@ -58,6 +61,7 @@ public class IntroActivity extends AppCompatActivity {
         }
     }
 
+    //displaying alert dialog to inform user about permission
     private void showPermissionDialog(String title, String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
@@ -71,6 +75,7 @@ public class IntroActivity extends AppCompatActivity {
         builder.show();
     }
 
+    //retrieving the result of requests made
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {

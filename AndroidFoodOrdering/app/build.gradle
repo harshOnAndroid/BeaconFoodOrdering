@@ -48,9 +48,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:9.8.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support:multidex-instrumentation:1.0.3'
+    testImplementation 'junit:junit:4.12'
+
+    implementation 'com.estimote:sdk:1.0.12'
 
     implementation 'com.estimote:proximity-sdk:1.0.3'
 
-    testImplementation 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'
